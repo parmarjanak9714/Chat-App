@@ -21,7 +21,7 @@ const handleChange = (e) => {
 const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-        const response = await axios.post('http://localhost:5000/api/users/register', fromData);
+        const response = await axios.post('https://chat-app-rzj8.onrender.com/api/users/register', fromData);
         console.log(response.data);
         alert('Registration successfull');
         navigate('/login');
