@@ -54,7 +54,8 @@ socket.on("disconnect",()=>{
 
 
 
+const PORT = process.env.PORT || 5000;
 
- server.listen(5000 ,() =>{
-    console.log("your server is start");
- });
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
