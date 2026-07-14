@@ -33,10 +33,14 @@ const SideBar = () => {
   }, []);
 
   // ૪. કામ કરતું સર્ચ ફિલ્ટર (ડેટાબેઝના 'name' અથવા 'username' ફિલ્ડ પ્રમાણે ચેક કરશે)
-  const filteredUsers = users.filter(user => {
-    const nameToCheck = user.name || user.username || "";
-    return nameToCheck.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  // 🟢 આ સેફ કોડ જુના 'filteredUsers' ની જગ્યાએ મૂકો
+const filteredUsers = Array.isArray(users) 
+  ? users.filter(user => {
+      const nameToCheck = user.name || user.username || "";
+      return nameToCheck.toLowerCase().includes(searchTerm.toLowerCase());
+    })
+  : []; // જો ડેટા એરે ના હોય તો ખાલી એરે સેટ થશે, એરર ગાયબ થઈ જશે!
+
 
   return (
     // આખું સાઇડબાર કન્ટેનર (થીમ આધારિત કલર બદલાશે - ડાર્ક કે લાઇટ)
