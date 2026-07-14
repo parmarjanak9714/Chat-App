@@ -75,5 +75,20 @@ router.post("/login",async(req,res)=>{
             });
         });
 
+        // all users list fetch
+router.get("/all-users", async (req, res) => {
+    try {
+    
+        const allUsers = await User.find({}, "name email"); 
+        
+
+        res.status(200).json(allUsers); 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "સર્વરમાં ભૂલ છે" });
+    }
+});
+
+
 
 module.exports = router;
