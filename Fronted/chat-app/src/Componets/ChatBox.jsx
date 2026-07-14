@@ -1,12 +1,29 @@
 import React, { useState } from 'react'
 import MessageInput from './MessageInput'
-import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs' // આઇકન્સ ઈમ્પોર્ટ કર્યા
+import { BsFillSunFill, BsFillMoonFill,BsThreeDotsVertical  } from 'react-icons/bs' 
+// 🟢 WhatsApp જેવા એડવાન્સ આઇકન્સ ઇમ્પોર્ટ કર્યા (Video, Call, Search)
+import { IoVideocamOutline, IoCallOutline, IoSearchOutline } from 'react-icons/io5'
 
-const ChatBox = ({ darkMode, setDarkMode }) => {
+const ChatBox = ({ darkMode, setDarkMode, selectedUser, setSelectedUser   }) => {
   const [messages, setMessages] = useState([
     { id: 1, text: "Hello 👋", sender: "other", time: "10:30 AM" },
     { id: 2, text: "Hi 😄, how are you?", sender: "me", time: "10:31 AM" }
   ]);
+
+  // 🟢 આ લાઇન ફંક્શનની અંદર સૌથી ઉપર ઉમેરો
+const [showDropdown, setShowDropdown] = useState(false);
+
+// 🟢 આ કોડ શો-ડ્રોપડાઉન સ્ટેટની બિલકુલ નીચે ઉમેરો
+const handleLogout = () => {
+  const isConfirmed = window.confirm('Are you sure you want to log out? 🚪');
+  if (isConfirmed) {
+    alert('your account is logout successfully!');
+    // જો તમે useNavigate વાપરતા હોવ તો અહી નેવિગેટ કરાવી શકો, નહીંતર સાદું વિન્ડો રીડાયરેક્ટ:
+    window.location.href = '/login'; 
+  }
+  setShowDropdown(false);
+};
+
 
   const handleSendMessage = (inputText) => {
     if (!inputText.trim()) return;
@@ -19,36 +36,106 @@ const ChatBox = ({ darkMode, setDarkMode }) => {
     setMessages([...messages, newMsg]);
   };
 
+  // કોલિંગ બટન માટે ડમી એલર્ટ ફંક્શન્સ
+  const handleActionClick = (actionName) => {
+    if (!selectedUser) {
+      alert("મહેરબાની કરીને પહેલા કોઈ ચેટ પસંદ કરો!");
+      return;
+    }
+    const name = selectedUser.name || selectedUser.username;
+    alert(`${actionName} starting with ${name}... 🚀`);
+  };
+
   return (
     <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
       darkMode ? 'bg-slate-950 text-white' : 'bg-gray-50 text-gray-900'
     }`}>
         
-        {/* 🟢 Header - હવે આમાં જમણી બાજુ થીમ ચેન્જર બટન છે */}
+        {/* 🟢 Header - હવે આમાં ડાબી બાજુ પ્રોફાઇલ અને જમણી બાજુ વૉટ્સએપ આઇકન્સ છે */}
         <div className={`p-4 border-b flex items-center justify-between ${
           darkMode ? 'bg-gray-900 border-gray-800' : 'bg-gray-100 border-gray-200'
         }`}>
-            {/* ડાબી બાજુ યુઝર પ્રોફાઇલ */}
+            {/* 🔴 ડાબી બાજુ: યુઝર પ્રોફાઇલ અને નામ */}
             <div className='flex items-center space-x-4'>
-                <div className='w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white text-lg'>
-                    J
+                    <button onClick={() => setSelectedUser(null)} 
+      className='md:hidden p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full cursor-pointer text-xl font-bold text-gray-500 mr-1'
+      title="Back to Chats">
+      ←
+    </button>
+                <div className='w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white text-lg shadow-sm'>
+                    {selectedUser ? (selectedUser.name || selectedUser.username || 'u').charAt(0).toUpperCase() : '?'}
                 </div>
                 <div>
-                    <h1 className='text-xl font-semibold'>Janak</h1>
-                    <p className='text-emerald-500 text-xs flex items-center'>Online</p>
+                    <h1 className='text-xl font-semibold'>
+                        {selectedUser ? (selectedUser.name || selectedUser.username) : 'selected Chat'  }
+                    </h1>
+                    <p className='text-emerald-500 text-xs flex items-center'>
+                        {selectedUser ? 'online' : 'not active users'}
+                    </p>
                 </div>
             </div>
 
-            {/* 🟢 જમણી બાજુ ટોચ પર રહેલું લાઇટ/ડાર્ક મોડ બટન */}
-            <button 
-              onClick={() => setDarkMode(!darkMode)}
-              className={`p-2.5 rounded-xl text-lg transition-all cursor-pointer shadow-sm ${
-                darkMode ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700' : 'bg-white text-indigo-600 hover:bg-gray-200 border border-gray-300'
-              }`}
-              title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            >
-              {darkMode ? <BsFillSunFill /> : <BsFillMoonFill />}
-            </button>
+            {/* 🔵 જમણી બાજુ: વૉટ્સએપ આઇકન્સ + થીમ ચેન્જર */}
+            <div className='flex items-center space-x-2 md:space-x-4 text-xl text-gray-500 dark:text-gray-400'>
+                {/* વિડીયો કોલ આઇકન */}
+                <button 
+                  onClick={() => handleActionClick("Video Call")}
+                  className='p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors'
+                  title="Video Call"
+                >
+                  <IoVideocamOutline />
+                </button>
+
+                {/* ઓડિયો કોલ આઇકન */}
+                <button 
+                  onClick={() => handleActionClick("Voice Call")}
+                  className='p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors'
+                  title="Voice Call"
+                >
+                  <IoCallOutline />
+                </button>
+
+                {/* સર્ચ આઇકન */}
+                <button 
+                  onClick={() => handleActionClick("Search in Chat")}
+                  className='p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors'
+                  title="Search Chat"
+                >
+                  <IoSearchOutline />
+                </button>
+
+                {/* લાઈન સેપરેટર (નાની લીટી) */}
+                <span className='h-6 w-[1px] bg-gray-300 dark:bg-gray-700 hidden sm:inline-block'></span>
+
+                {/* લાઇટ/ડાર્ક મોડ બટન */}
+                <button 
+                  onClick={() => setDarkMode(!darkMode)}
+                  className={`p-2 rounded-xl text-lg transition-all cursor-pointer shadow-sm ${
+                    darkMode ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700' : 'bg-white text-indigo-600 hover:bg-gray-200 border border-gray-300'
+                  }`}
+                  title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                >
+                  {darkMode ? <BsFillSunFill /> : <BsFillMoonFill />}
+                </button>
+                <button 
+  onClick={() => setShowDropdown(!showDropdown)} 
+  className='p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full cursor-pointer text-lg'
+>
+  <BsThreeDotsVertical />
+</button>
+
+{/* ૩-ડોટ નું ડ્રોપડાઉન લિસ્ટ */}
+{showDropdown && (
+  <div className={`absolute right-4 top-16 w-48 rounded-xl shadow-xl py-2 border z-50 ${
+    darkMode ? 'bg-gray-900 border-gray-800 text-white' : 'bg-white border-gray-200 text-gray-800'
+  }`}>
+    <div onClick={() => alert('Privacy')} className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">🔒 Privacy Settings</div>
+    <div onClick={() => alert('Notifications')} className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">🔔 Notifications</div>
+    <div className="border-t border-gray-200 dark:border-gray-800 my-1"></div>
+    <div onClick={handleLogout} className="px-4 py-2 text-sm font-semibold text-red-500 cursor-pointer hover:bg-red-500/10">🚪 Log Out</div>
+  </div>
+)}
+            </div>
         </div>
 
         {/* Messages Area */}

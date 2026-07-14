@@ -5,7 +5,7 @@ import { IoCallOutline, IoCallSharp, IoSettingsOutline } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom' // 🟢 આ લાઇન ઉમેરો
 
 
-const SideBar = ({ darkMode }) => {
+const SideBar = ({ darkMode,setSelectedUser  }) => {
     const navigate = useNavigate();
   const [users, setUsers] = useState([]); 
   const [loading, setLoading] = useState(true);
@@ -38,15 +38,17 @@ const SideBar = ({ darkMode }) => {
   };
 
   return (
-    <div className={`hidden md:flex w-[380px] h-screen border-r transition-all duration-300 ${
+    <div className={`flex flex-col-reverse md:flex-row w-full md:w-[380px] h-screen border-r transition-all duration-300 ${
+
       darkMode ? 'bg-gray-950 text-white border-gray-800' : 'bg-white text-gray-900 border-gray-200'
     }`}>
       
       {/* 🟢 ડાબી બાજુનું વૉટ્સએપ આઇકન બાર (બટન વગરનું) */}
-      <div className={`w-[70px] flex flex-col items-center justify-between py-6 border-r ${
-        darkMode ? 'bg-gray-900 border-gray-800' : 'bg-gray-100 border-gray-200'
-      }`}>
-        <div className='flex flex-col space-y-6 text-xl text-gray-400'>
+      {/* 🟢 આ લાઇન રિપ્લેસ કરો: મોબાઇલમાં આડી (w-full flex-row) અને લેપટોપમાં ઊભી (md:w-[70px] md:flex-col) બનશે */}
+<div className={`w-full h-[65px] md:w-[70px] md:h-full flex flex-row md:flex-col items-center justify-around md:justify-between py-2 md:py-6 border-t md:border-t-0 md:border-r ${
+  darkMode ? 'bg-gray-900 border-gray-800' : 'bg-gray-100 border-gray-200'
+}`}>
+            <div className='flex flex-row md:flex-col justify-around w-full md:w-auto md:space-y-6 text-xl text-gray-400'>
           <div onClick={() => setActiveTab("chats")} className={`cursor-pointer transition-colors ${activeTab === "chats" ? "text-emerald-500" : "hover:text-emerald-500"}`}><BsChatLeftTextFill /></div>
           <div onClick={() => setActiveTab("calls")} className={`cursor-pointer transition-colors ${activeTab === "calls" ? "text-emerald-500" : "hover:text-emerald-500"}`}><IoCallOutline /></div>
           <div onClick={() => setActiveTab("settings")} className={`cursor-pointer transition-colors ${activeTab === "settings" ? "text-emerald-500" : "hover:text-emerald-500"}`}><IoSettingsOutline /></div>
@@ -74,7 +76,9 @@ const SideBar = ({ darkMode }) => {
                 <p className='text-gray-500 text-sm text-center mt-4'>not users found!</p>
               ) : (
                 filteredUsers.map((user, index) => (
-                  <div key={user._id || index} className={`flex items-center p-3 rounded-xl cursor-pointer transition-all ${darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}>
+                  <div key={user._id || index} 
+                  onClick={()=>setSelectedUser(user)}
+                  className={`flex items-center p-3 rounded-xl cursor-pointer transition-all ${darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}>
                     <div className='w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white text-lg shrink-0'>
                       {(user.name || user.username || "U").charAt(0).toUpperCase()}
                     </div>

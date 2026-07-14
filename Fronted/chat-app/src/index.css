@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+/* 🟢 Tailwind v4 માટે આખા પ્રોજેક્ટનો મુખ્ય ફોન્ટ બદલવા માટે આટલું લખો */
+@theme {
+  --font-sans: 'Inter', 'Poppins', sans-serif;
+}
+
+/* આખી વેબસાઈટ પર આ ફોન્ટ અપ્લાય કરવા માટે */
+body {
+  font-family: var(--font-sans);
+}
