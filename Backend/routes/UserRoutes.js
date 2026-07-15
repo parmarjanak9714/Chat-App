@@ -1,4 +1,4 @@
-const experess = require("express");
+const express = require("express");
 const router = experess.Router();
 
 // ચેક કરી લેજો કે મોડેલનું નામ 'users' છે કે 'user' (આપણે નવું મોડેલ 'user' નામથી બનાવ્યું છે)
@@ -32,7 +32,7 @@ router.post("/send-otp", async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "OTP જનરેટ કરવામાં ભૂલ આવી" });
+        res.status(500).json({ message: "OTP junrate mistak" });
     }
 });
 
