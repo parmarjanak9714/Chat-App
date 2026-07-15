@@ -1,5 +1,5 @@
 const express = require("express");
-const router = experess.Router();
+const router = express.Router();
 
 // ચેક કરી લેજો કે મોડેલનું નામ 'users' છે કે 'user' (આપણે નવું મોડેલ 'user' નામથી બનાવ્યું છે)
 const User = require("../models/users"); 
