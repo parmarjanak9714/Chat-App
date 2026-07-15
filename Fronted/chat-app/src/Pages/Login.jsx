@@ -18,7 +18,7 @@ const Login = () => {
     setLoading(true);
     try {
       // તમારા બેકએન્ડના નવા રાઉટ પર હિટ કરો
-      const response = await axios.post('https://chat-app-rzj8.onrender.com', { phoneNumber });
+      const response = await axios.post('https://chat-app-rzj8.onrender.com/api/users/send-otp', { phoneNumber });
       
       setIsOtpSent(true);
       setLoading(false);
@@ -51,7 +51,7 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('https://chat-app-rzj8.onrender.com', { phoneNumber, otp });
+      const response = await axios.post('https://chat-app-rzj8.onrender.com/api/users/verify-otp', { phoneNumber, otp });
       
       localStorage.setItem("token", response.data.token);
       toast.success("Login is Succesfully!");
