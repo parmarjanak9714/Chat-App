@@ -1,4 +1,4 @@
-const experess = require("express");
+const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./confing/db");
 const cors = require("cors");
