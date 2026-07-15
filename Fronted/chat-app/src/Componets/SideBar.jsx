@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BsChatLeftTextFill } from 'react-icons/bs';
 import { IoCallOutline, IoSettingsOutline } from 'react-icons/io5';
+import { MdOutlineDonutLarge } from 'react-icons/md'; // 🟢 Status માટે
+import { FiRadio } from 'react-icons/fi'; // 🟢 Channels માટે
+import { HiOutlineUserGroup } from 'react-icons/hi'; // 🟢 Communities માટે
 import { useNavigate } from 'react-router-dom';
 
 const SideBar = ({ darkMode, setSelectedUser }) => {
@@ -59,6 +62,17 @@ const SideBar = ({ darkMode, setSelectedUser }) => {
         <div onClick={() => setActiveTab("settings")} className={`cursor-pointer text-2xl transition-colors p-2 rounded-xl ${activeTab === "settings" ? "text-[#00a884]" : "text-gray-400 hover:text-[#00a884]"}`}>
           <IoSettingsOutline />
         </div>
+        {/* 🆕 આ ત્રણ નવા આઈકોન અહીં ચેટ્સ આઈકોનની નીચે ઉમેરી દો */}
+<div onClick={() => alert('Communities feature Coming Soon! 👥')} className="cursor-pointer text-2xl text-gray-400 hover:text-[#00a884] p-2 rounded-xl transition-colors">
+  <HiOutlineUserGroup />
+</div>
+<div onClick={() => alert('Status feature Coming Soon! ⭕')} className="cursor-pointer text-2xl text-gray-400 hover:text-[#00a884] p-2 rounded-xl transition-colors">
+  <MdOutlineDonutLarge />
+</div>
+<div onClick={() => alert('Channels feature Coming Soon! 📢')} className="cursor-pointer text-2xl text-gray-400 hover:text-[#00a884] p-2 rounded-xl transition-colors">
+  <FiRadio />
+</div>
+
       </div>
 
       {/* 🔵 ડાયનેમિક ચેટ/કોલ/સેટિંગ્સ લિસ્ટ */}
@@ -91,12 +105,10 @@ const SideBar = ({ darkMode, setSelectedUser }) => {
                     }`}
                   >
                     {/* વ્હોટ્સએપ જેવો પ્રોફાઈલ ફોટો લોજિક */}
-                    <img 
-                      src={user.profilePic || "https://flaticon.com"} 
-                      alt="avatar" 
-                      className='w-12 h-12 rounded-full object-cover shrink-0 border border-gray-200'
-                      onError={(e) => { e.target.src = "https://flaticon.com" }}
-                    />
+                    <div className='w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white text-lg shrink-0 shadow-sm border border-emerald-500'>
+                     {(user.name || "U").charAt(0).toUpperCase()}
+                    </div>
+
                     <div className='flex-1 min-w-0 ml-3.5'>
                       <div className='flex items-center justify-between'>
                         <h2 className='font-semibold text-[15px] truncate'>{user.name || "New Users"}</h2>
@@ -121,11 +133,10 @@ const SideBar = ({ darkMode, setSelectedUser }) => {
               {filteredUsers.map((user, index) => (
                 <div key={user._id || index} className={`flex items-center justify-between p-3 rounded-xl transition-all ${darkMode ? 'bg-gray-900' : 'bg-[#f0f2f5]'}`}>
                   <div className='flex items-center'>
-                    <img 
-                      src={user.profilePic || "https://flaticon.com"} 
-                      alt="avatar" 
-                      className='w-10 h-10 rounded-full object-cover'
-                    />
+                    <div className='w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-sm shrink-0 shadow-sm'>
+                      {(user.name || "U").charAt(0).toUpperCase()}
+                         </div>
+
                     <div className='ml-3'>
                       <h2 className='font-semibold text-[14px]'>{user.name || "New Users"}</h2>
                       <p className='text-[10px] text-gray-400'>Audio call available</p>

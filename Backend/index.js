@@ -35,6 +35,8 @@ connectDB();
 io.on("connection",(socket)=>{
    console.log("user connected",socket.id);
 
+   socket.removeAllListeners('send_message');
+
    // receved message 
 socket.on("send_message",(data)=>{
    console.log("message receved",data);
@@ -46,6 +48,7 @@ socket.on("send_message",(data)=>{
 // disctonnect 
 socket.on("disconnect",()=>{
    console.log("user desconnect");
+   socket.removeAllListeners();
 });
 
 });
