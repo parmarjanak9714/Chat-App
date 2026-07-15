@@ -2,11 +2,29 @@ import React from 'react'
 import ChatBox from '../Componets/ChatBox'
 import SideBar from '../Componets/SideBar'
 import { useState } from 'react'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const Chat = () => {
     const [darkMode, setDarkMode] = useState(false);
 
       const [selectedUser, setSelectedUser] = useState(null);
+
+        useEffect(() => {
+    // ૧. ચેક કરો કે લોકલ સ્ટોરેજમાં ટોકન છે કે નહીં
+    const token = localStorage.getItem("token");
+    
+    // ૨. જો ટોકન ન હોય, તો તેનો અર્થ એ કે યુઝર લોગિન નથી અથવા લોગઆઉટ થઈ ગયો છે
+    if (!token) {
+      // તેને ધક્કો મારીને સીધો લોગિન પેજ પર મોકલી દો!
+      navigate('/login'); 
+    }
+  }, [navigate]);
+
+
+
 
 
   return (
