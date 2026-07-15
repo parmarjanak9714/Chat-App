@@ -18,7 +18,7 @@ const ProfileSetup = () => {
       const token = localStorage.getItem('token');
 
       // તમારા ઓનરેન્ડર વાળા બેકએન્ડ પર પ્રોફાઈલ સેવ કરવાની API હિટ કરો
-      await axios.post('https://chat-app-rzj8.onrender.com', 
+      await axios.post('https://chat-app-rzj8.onrender.com/api/users/profile-setup', 
         { name }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
