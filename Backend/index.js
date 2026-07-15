@@ -2,7 +2,7 @@ const experess = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./confing/db");
 const cors = require("cors");
-const userRoutes = require("./routes/UserRoutes");
+const UserRoutes = require("./routes/UserRoutes");
 const http = require("http");
 
 const { Server } = require("socket.io");
@@ -11,7 +11,7 @@ dotenv.config();
 
 connectDB();
 
- const app = experess();
+ const app = express();
 // create http server 
  const server = http.createServer(app);
 // socket io setup 
@@ -21,10 +21,10 @@ connectDB();
       },
  });
 // moddelware
- app.use(experess.json());
+ app.use(express.json());
  app.use(cors());
  
- app.use("/api/users",userRoutes)
+ app.use("/api/users",UserRoutes)
 // test routes 
  app.get("/",(req,res)=>{
     res.send("happy your server is running");
