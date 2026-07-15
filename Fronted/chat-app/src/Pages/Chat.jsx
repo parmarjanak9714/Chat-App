@@ -2,7 +2,7 @@ import React from 'react'
 import ChatBox from '../Componets/ChatBox'
 import SideBar from '../Componets/SideBar'
 import { useState } from 'react'
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
