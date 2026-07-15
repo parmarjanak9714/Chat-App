@@ -62,7 +62,7 @@ router.post("/verify-otp", async (req, res) => {
 
         // JWT ટોકન જનરેટ કરો
         const token = jwt.sign(
-            { id: user._id },
+            { _id: user._id },
             process.env.JWT_SECRET,
             { expiresIn: "7d" }
         );
@@ -85,7 +85,7 @@ router.post("/profile-setup", authMiddelware, async (req, res) => {
         const { name, profilePic } = req.body;
         
         // authMiddelware માંથી આપણને req.user.id મળશે (તમારા મિડલવેર મુજબ ચેક કરી લેવું)
-        const userId = req.user.id; 
+        const userId = req.user._id; 
 
         const user = await User.findById(userId);
         if (!user) {
