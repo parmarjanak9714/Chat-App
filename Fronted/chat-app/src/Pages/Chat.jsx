@@ -12,6 +12,8 @@ const Chat = () => {
 
       const [selectedUser, setSelectedUser] = useState(null);
 
+      const navigate = useNavigate();
+
         useEffect(() => {
     // ૧. ચેક કરો કે લોકલ સ્ટોરેજમાં ટોકન છે કે નહીં
     const token = localStorage.getItem("token");
