@@ -28,7 +28,7 @@ const MessageInput = ({ onSendMessage, darkMode }) => {
 
   return (
     // 🟢 આખું મુખ્ય કન્ટેનર: થીમ પ્રમાણે bg-gray-900 અથવા bg-gray-100 થશે
-    <div className={`p-2 md:p-4 flex items-center gap-2 md:gap-3 transition-colors duration-300 w-full ${
+    <div className={`p-2 md:p-4 flex items-center gap-2 md:gap-3 transition-colors duration-300 w-full shrink-0 max-w-full overflow-hidden${
       darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-800'
     }`}>
         
@@ -52,7 +52,7 @@ const MessageInput = ({ onSendMessage, darkMode }) => {
               value={text}
               onChange={(e) => setText(e.target.value)}
               onKeyDown={handleKeyDown}
-              className={`flex-1 p-2 bg-transparent outline-none min-w-0 ${
+              className={`flex-1 p-2 bg-transparent outline-none min-w-0${
                 darkMode ? 'text-white placeholder-gray-500' : 'text-gray-900 placeholder-gray-400'
               }`}
             />

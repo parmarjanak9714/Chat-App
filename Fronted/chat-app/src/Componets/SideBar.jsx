@@ -50,7 +50,7 @@ const SideBar = ({ darkMode, setSelectedUser }) => {
     }`}>
       
       {/* 🟢 વૉટ્સએપ આઇકન બાર - મોબાઇલમાં નીચે અને લેપટોપમાં ઊભી સાઇડમાં (Fully Responsive) */}
-      <div className={`w-full h-[65px] md:w-[70px] md:h-full flex flex-row md:flex-col items-center justify-around md:justify-start md:py-6 md:space-y-8 border-t md:border-t-0 md:border-r ${
+      <div className={`fixed bottom-0 left-0 z-50 w-full h-[65px] md:w-[70px] md:h-full flex flex-row md:flex-col items-center justify-around md:justify-start md:py-6 md:space-y-8 border-t md:border-t-0 md:border-r ${
         darkMode ? 'bg-gray-900 border-gray-800' : 'bg-[#f0f2f5] border-gray-200'
       }`}>
         <div onClick={() => setActiveTab("chats")} className={`cursor-pointer text-2xl transition-colors p-2 rounded-xl ${activeTab === "chats" ? "text-[#00a884]" : "text-gray-400 hover:text-[#00a884]"}`}>
@@ -59,19 +59,21 @@ const SideBar = ({ darkMode, setSelectedUser }) => {
         <div onClick={() => setActiveTab("calls")} className={`cursor-pointer text-2xl transition-colors p-2 rounded-xl ${activeTab === "calls" ? "text-[#00a884]" : "text-gray-400 hover:text-[#00a884]"}`}>
           <IoCallOutline />
         </div>
-        <div onClick={() => setActiveTab("settings")} className={`cursor-pointer text-2xl transition-colors p-2 rounded-xl ${activeTab === "settings" ? "text-[#00a884]" : "text-gray-400 hover:text-[#00a884]"}`}>
-          <IoSettingsOutline />
-        </div>
+        <div onClick={() => alert('Status feature Coming Soon! ⭕')} className="cursor-pointer text-2xl text-gray-400 hover:text-[#00a884] p-2 rounded-xl transition-colors">
+  <MdOutlineDonutLarge />
+</div>
+        
         {/* 🆕 આ ત્રણ નવા આઈકોન અહીં ચેટ્સ આઈકોનની નીચે ઉમેરી દો */}
 <div onClick={() => alert('Communities feature Coming Soon! 👥')} className="cursor-pointer text-2xl text-gray-400 hover:text-[#00a884] p-2 rounded-xl transition-colors">
   <HiOutlineUserGroup />
 </div>
-<div onClick={() => alert('Status feature Coming Soon! ⭕')} className="cursor-pointer text-2xl text-gray-400 hover:text-[#00a884] p-2 rounded-xl transition-colors">
-  <MdOutlineDonutLarge />
-</div>
+
 <div onClick={() => alert('Channels feature Coming Soon! 📢')} className="cursor-pointer text-2xl text-gray-400 hover:text-[#00a884] p-2 rounded-xl transition-colors">
   <FiRadio />
 </div>
+<div onClick={() => setActiveTab("settings")} className={`cursor-pointer text-2xl transition-colors p-2 rounded-xl ${activeTab === "settings" ? "text-[#00a884]" : "text-gray-400 hover:text-[#00a884]"}`}>
+          <IoSettingsOutline />
+        </div>
 
       </div>
 
@@ -112,7 +114,7 @@ const SideBar = ({ darkMode, setSelectedUser }) => {
                     <div className='flex-1 min-w-0 ml-3.5'>
                       <div className='flex items-center justify-between'>
                         <h2 className='font-semibold text-[15px] truncate'>{user.name || "New Users"}</h2>
-                        <span className='text-[11px] text-gray-400'>{user.phoneNumber?.slice(-10)}</span>
+                        {/* <span className='text-[11px] text-gray-400'>{user.phoneNumber?.slice(-10)}</span> */}
                       </div>
                       {/* વ્હોટ્સએપ જેવું સ્ટેટસ (About) નીચે બતાવો */}
                       <p className='text-xs text-gray-400 truncate mt-0.5'>{user.about || 'Hey there! I am using Chat-App.'}</p>
