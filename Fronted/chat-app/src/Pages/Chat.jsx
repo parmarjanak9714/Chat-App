@@ -40,7 +40,7 @@ const Chat = () => {
     </div>
     
     {/* 🟢 જો મોબાઈલમાં કોઈ યુઝર સિલેક્ટ ન હોય, તો ચેટબોક્સ છુપાયેલું રહેશે. જેવું ક્લિક થશે એટલે આખું ચેટબોક્સ ખુલી જશે! */}
-    <div className={`flex-1 h-full ${!selectedUser ? 'hidden md:flex' : 'flex'}`}>
+    <div className={`flex-1 h-full relative pb-[65px] md:pb-0 ${!selectedUser ? 'hidden md:flex' : 'flex'}`}>
       <ChatBox darkMode={darkMode} setDarkMode={setDarkMode} selectedUser={selectedUser} setSelectedUser={setSelectedUser} /> 
     </div>
 

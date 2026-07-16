@@ -52,7 +52,7 @@ const handleLogout = () => {
     }`}>
         
         {/* 🟢 Header - હવે આમાં ડાબી બાજુ પ્રોફાઇલ અને જમણી બાજુ વૉટ્સએપ આઇકન્સ છે */}
-        <div className={`p-4 border-b flex items-center justify-between ${
+        <div className={`p-3 md:p-4 border-b flex items-center justify-between gap-2 min-w-0 ${
           darkMode ? 'bg-gray-900 border-gray-800' : 'bg-gray-100 border-gray-200'
         }`}>
             {/* 🔴 ડાબી બાજુ: યુઝર પ્રોફાઇલ અને નામ */}
@@ -65,8 +65,8 @@ const handleLogout = () => {
                 <div className='w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white text-lg shadow-sm'>
                     {selectedUser ? (selectedUser.name || selectedUser.username || 'u').charAt(0).toUpperCase() : '?'}
                 </div>
-                <div>
-                    <h1 className='text-xl font-semibold'>
+                <div  className='min-w-0 flex-1'>
+                    <h1 className='text-lg md:text-xl font-semibold truncate'>
                         {selectedUser ? (selectedUser.name || selectedUser.username) : 'selected Chat'  }
                     </h1>
                     <p className='text-emerald-500 text-xs flex items-center'>
@@ -77,24 +77,21 @@ const handleLogout = () => {
 
             {/* 🔵 જમણી બાજુ: વૉટ્સએપ આઇકન્સ + થીમ ચેન્જર */}
             <div className='flex items-center space-x-2 md:space-x-4 text-xl text-gray-500 dark:text-gray-400'>
-                {/* વિડીયો કોલ આઇકન */}
-                <button 
-                  onClick={() => handleActionClick("Video Call")}
-                  className='p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors'
-                  title="Video Call"
-                >
-                  <IoVideocamOutline />
-                </button>
+               {/* વિડીયો કોલ આઇકન */}
+                 <button 
+                    onClick={() => handleActionClick("Video Call")}
+                     className='hidden sm:block p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors'
+                      title="Video Call">
+                       <IoVideocamOutline />
+                         </button>
 
-                {/* ઓડિયો કોલ આઇકન */}
-                <button 
-                  onClick={() => handleActionClick("Voice Call")}
-                  className='p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors'
-                  title="Voice Call"
-                >
-                  <IoCallOutline />
-                </button>
-
+                  {/* ઓડિયો કોલ આઇકન */}
+                       <button 
+                         onClick={() => handleActionClick("Voice Call")}
+                          className='hidden sm:block p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors'
+                          title="Voice Call">
+                          <IoCallOutline />
+                           </button>
                 {/* સર્ચ આઇકન */}
                 <button 
                   onClick={() => handleActionClick("Search in Chat")}
