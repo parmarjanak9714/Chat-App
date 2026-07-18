@@ -30,9 +30,9 @@ const Chat = () => {
 
 
   return (
-  <div className={`flex w-screen h-screen overflow-hidden transition-all duration-300 ${
-    darkMode ? 'bg-gray-950 text-white' : 'bg-white text-gray-900'
-  }`}>
+  <div className={`flex w-screen h-[100dvh] overflow-hidden transition-all duration-300 ${
+  darkMode ? 'bg-gray-950 text-white' : 'bg-white text-gray-900'
+}`}>
     
     {/* 🟢 મોબાઈલમાં જો કોઈ યુઝર સિલેક્ટ કરેલો હોય, તો લિસ્ટ છુપાઈ જશે (hidden md:block). નહીંતર દેખાશે. */}
     <div className={`w-full md:w-[380px] h-full shrink-0 ${selectedUser ? 'hidden md:block' : 'block'}`}>
@@ -40,7 +40,7 @@ const Chat = () => {
     </div>
     
     {/* 🟢 જો મોબાઈલમાં કોઈ યુઝર સિલેક્ટ ન હોય, તો ચેટબોક્સ છુપાયેલું રહેશે. જેવું ક્લિક થશે એટલે આખું ચેટબોક્સ ખુલી જશે! */}
-    <div className={`flex-1 h-full relative pb-[65px] md:pb-0 ${!selectedUser ? 'hidden md:flex' : 'flex'}`}>
+    <div className={`flex-1 h-full relative ${!selectedUser ? 'hidden md:flex' : 'flex'}`}>
       <ChatBox darkMode={darkMode} setDarkMode={setDarkMode} selectedUser={selectedUser} setSelectedUser={setSelectedUser} /> 
     </div>
 

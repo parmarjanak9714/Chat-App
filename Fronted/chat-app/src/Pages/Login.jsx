@@ -1,140 +1,211 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import toast from 'react-hot-toast'; // સુંદર ટોસ્ટ પોપ-અપ માટે
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { IoChatbubbleEllipsesSharp,IoArrowForward  } from "react-icons/io5";
+import { MdPhoneAndroid } from "react-icons/md";
+import { FaWhatsapp } from "react-icons/fa";
 
 const Login = () => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [otp, setOtp] = useState('');
-  const [isOtpSent, setIsOtpSent] = useState(false); // ઓટીપી મોકલાયો છે કે નહીં તે જોવા
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [otp, setOtp] = useState("");
+  const [isOtpSent, setIsOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
-  // ૧. ડમી OTP જનરેટ કરવા માટેનું ફંક્શન
   const handleSendOtp = async (e) => {
     e.preventDefault();
-    if (!phoneNumber) return toast.error("please enter your mobile number!");
-    
-    setLoading(true);
-    try {
-      // તમારા બેકએન્ડના નવા રાઉટ પર હિટ કરો
-      const response = await axios.post('https://chat-app-rzj8.onrender.com/api/users/send-otp', { phoneNumber });
-      
-      setIsOtpSent(true);
-      setLoading(false);
 
-      // વ્હોટ્સએપ સ્ટાઈલનો સુંદર ગ્રીન ટોસ્ટ પોપ-અપ
-      toast.success(`your testing OTP: ${response.data.dummyOtp}`, {
-        duration: 10000, // ૧૦ સેકન્ડ સુધી સ્ક્રીન પર રહેશે
+    if (!phoneNumber) {
+      return toast.error("Please enter your mobile number");
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        "https://chat-app-rzj8.onrender.com/api/users/send-otp",
+        { phoneNumber }
+      );
+
+      setLoading(false);
+      setIsOtpSent(true);
+
+      toast.success(`Testing OTP : ${response.data.dummyOtp}`, {
+        duration: 10000,
         style: {
-          border: '1px solid #00a884',
-          padding: '16px',
-          color: '#111b21',
-          background: '#e7fce3', 
-          fontWeight: 'bold'
-        },
-        iconTheme: {
-          primary: '#00a884',
-          secondary: '#FFFAEE',
+          border: "1px solid #00a884",
+          padding: "16px",
+          color: "#111b21",
+          background: "#e7fce3",
+          fontWeight: "600",
         },
       });
     } catch (error) {
       setLoading(false);
-      toast.error("OTP fetch mistak! please try again!");
+      toast.error("Failed to send OTP");
     }
   };
 
-  // ૨. OTP વેરિફાય કરીને લોગિન કે ઓટો-રજીસ્ટર કરવા માટેનું ફંક્શન
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    if (!otp) return toast.error("please enter your OTP!");
+
+    if (!otp) {
+      return toast.error("Please enter OTP");
+    }
 
     setLoading(true);
+
     try {
-      const response = await axios.post('https://chat-app-rzj8.onrender.com/api/users/verify-otp', { phoneNumber, otp });
-      
+      const response = await axios.post(
+        "https://chat-app-rzj8.onrender.com/api/users/verify-otp",
+        {
+          phoneNumber,
+          otp,
+        }
+      );
+
       localStorage.setItem("token", response.data.token);
-      toast.success("Login is Succesfully!");
+
+      toast.success("Login Successful");
+
       setLoading(false);
 
-      // જો નવો યુઝર હોય તો પ્રોફાઈલ સેટઅપ પેજ પર મોકલો, નહીંતર ડાયરેક્ટ ચેટ પર
       if (response.data.isProfileSetup === false) {
-        navigate('/profile-setup');
+        navigate("/profile-setup");
       } else {
-        navigate('/chat');
+        navigate("/chat");
       }
     } catch (error) {
       setLoading(false);
-      toast.error(error.response?.data?.message || "wrong OTP ! Please try again!.");
+
+      toast.error(
+        error.response?.data?.message || "Invalid OTP"
+      );
     }
   };
 
   return (
-    <div className='h-screen bg-cover bg-center flex items-center justify-center'
-      style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop')",
-      }}
-    >
-      <div className='bg-white/10 backdrop-blur-lg p-10 rounded-3xl w-[400px] shadow-2xl border border-white/20 text-center'>
-        
-        {/* વ્હોટ્સએપ આઈકોન જેવો લુક અને હેડિંગ */}
-        <div className="text-5xl mb-4">💬</div>
-        <h1 className='text-3xl font-bold text-white mb-2'>
-          WhatsApp Chat
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#0b141a] via-[#111b21] to-[#005c4b] px-4">
+      {/* Dark Overlay */}
+
+      {/* Login Card */}
+      <div className="relative z-10 w-full max-w-md rounded-3xl border border-white/20 bg-white/10 backdrop-blur-2xl shadow-2xl p-8 md:p-10 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,168,132,0.35)]">
+
+        {/* Logo */}
+        <div className="flex justify-center mb-6">
+  <div className="w-20 h-20 rounded-full bg-[#00a884] flex items-center justify-center shadow-[0_10px_40px_rgba(0,168,132,0.45)]">
+    <FaWhatsapp className="text-white text-5xl" />
+  </div>
+</div>
+
+        {/* Heading */}
+        <h1 className="text-white text-4xl font-bold text-center">
+          WhatsApp
         </h1>
-        <p className='text-gray-200 text-sm mb-8'>
-          {!isOtpSent ? "your phone number verified " : "enter your OTP!"}
+
+        <p className="text-center text-gray-200 mt-2 mb-8">
+          {!isOtpSent
+            ? "Enter your phone number to continue"
+            : "Enter the OTP sent to your number"}
         </p>
-
-        {/* સ્ટેપ ૧: જો ઓટીપી ન મોકલાયો હોય તો ફોન નંબરનું બોક્સ બતાવો */}
         {!isOtpSent ? (
-          <form onSubmit={handleSendOtp} className='space-y-5'>
-            <input 
-              type='text' 
-              value={phoneNumber} 
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder='Enter Your Phonr Number (+91...) ' 
-              className='w-full p-3 rounded-xl bg-white/80 text-black placeholder:text-gray-600 outline-none text-center font-semibold text-lg'
-            />
-            <button 
-              type='submit'
-              disabled={loading}
-              className='w-full bg-[#00a884] hover:bg-[#028a6c] transition-all duration-300 text-white p-3 rounded-xl font-semibold'
-            >
-              {loading ? "Send..." : "Move (Fethch OTP)"}
-            </button>
-          </form>
-        ) : (
-          /* સ્ટેપ ૨: જો ઓટીપી મોકલાઈ ગયો હોય તો ઓટીપી નાખવાનું બોક્સ બતાવો */
-          <form onSubmit={handleVerifyOtp} className='space-y-5'>
-            <input 
-              type='text' 
-              value={otp} 
-              onChange={(e) => setOtp(e.target.value)}
-              placeholder='please enter 6 character otp! ' 
-              maxLength={6}
-              className='w-full p-3 rounded-xl bg-white/80 text-black placeholder:text-gray-600 outline-none text-center font-bold text-xl tracking-widest'
-            />
-            <button 
-              type='submit'
-              disabled={loading}
-              className='w-full bg-green-500 hover:bg-green-600 transition-all duration-300 text-white p-3 rounded-xl font-semibold'
-            >
-              {loading ? "verified..." : "verified otp!"}
-            </button>
-            <button 
-              type="button"
-              onClick={() => setIsOtpSent(false)} 
-              className="text-sm text-green-300 hover:underline block mx-auto mt-2"
-            >
-              Change Your Number?
-            </button>
-          </form>
-        )}
+  <form onSubmit={handleSendOtp} className="space-y-5">
 
-      </div>
+    <div className="flex items-center bg-white rounded-xl px-4">
+      <MdPhoneAndroid className="text-[#00a884] text-2xl mr-3" />
+
+      <input
+  type="tel"
+  value={phoneNumber}
+  onChange={(e) => setPhoneNumber(e.target.value)}
+  placeholder="Enter Mobile Number (+91...)"
+  className="w-full py-4 bg-transparent outline-none text-gray-800 font-medium placeholder:text-gray-400 focus:ring-2 focus:ring-[#00a884] rounded-lg transition-all duration-300"
+/>
     </div>
-  );
+
+    <button
+  type="submit"
+  disabled={loading}
+  className="w-full bg-[#00a884] hover:bg-[#01856c] transition-all duration-300 text-white py-4 rounded-xl font-semibold text-lg shadow-lg flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer"
+>
+  {loading ? (
+  <div className="flex items-center gap-2">
+    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+    <span>Sending...</span>
+  </div>
+) : (
+  <>
+    Get OTP
+    <IoArrowForward className="text-xl" />
+  </>
+)}
+</button>
+
+  </form>
+  
+) : (
+  <form onSubmit={handleVerifyOtp} className="space-y-5">
+
+    <input
+  type="text"
+  value={otp}
+  maxLength={6}
+  onChange={(e) => setOtp(e.target.value)}
+  placeholder="Enter 6 Digit OTP"
+  className="w-full py-4 rounded-xl text-center tracking-[8px] text-2xl font-bold bg-white text-gray-800 outline-none focus:ring-2 focus:ring-[#00a884] transition-all duration-300"
+/>
+
+    <button
+  type="submit"
+  disabled={loading}
+  className="w-full bg-[#00a884] hover:bg-[#01856c] transition-all duration-300 text-white py-4 rounded-xl font-semibold text-lg shadow-lg flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer"
+>
+  {loading ? (
+  <div className="flex items-center gap-2">
+    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+    <span>Verifying...</span>
+  </div>
+) : (
+  <>
+    Verify OTP
+    <IoArrowForward className="text-xl" />
+  </>
+
+  )}
+</button>
+
+    <button
+      type="button"
+      onClick={() => setIsOtpSent(false)}
+      className="w-full text-center text-green-300 hover:text-white transition cursor-pointer"
+    >
+      Change Mobile Number
+    </button>
+
+  </form>
+)}
+
+<div className="mt-8 pt-5 border-t border-white/20 text-center">
+  <h3 className="text-lg font-bold text-[#25D366]">
+    Janak Parmar
+  </h3>
+
+  <p className="text-sm text-gray-300 mt-1">
+    MERN Stack Developer
+  </p>
+
+  <p className="text-xs text-gray-400 mt-3 leading-6">
+      React • Node • Express • MongoDB • Socket.IO
+
+  </p>
+</div>
+
+
+</div>
+</div>
+);
 };
 
 export default Login;

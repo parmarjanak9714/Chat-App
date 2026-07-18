@@ -22,7 +22,7 @@ const ProtectedRoute = ({ children }) => {
 
 const App = () => {
   return (
-    <div>
+    <div className="w-full h-[100dvh]">
       <Toaster position="top-center" reverseOrder={false} /> 
 
       <Routes>

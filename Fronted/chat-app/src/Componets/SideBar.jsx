@@ -45,12 +45,12 @@ const SideBar = ({ darkMode, setSelectedUser }) => {
   };
 
   return (
-    <div className={`flex flex-col-reverse md:flex-row w-full md:w-[380px] h-screen border-r transition-all duration-300 ${
+    <div className={`flex flex-col-reverse md:flex-row w-full h-full border-r overflow-hidden transition-all duration-300 ${
       darkMode ? 'bg-gray-950 text-white border-gray-800' : 'bg-[#fff] text-gray-900 border-gray-200'
     }`}>
       
       {/* 🟢 વૉટ્સએપ આઇકન બાર - મોબાઇલમાં નીચે અને લેપટોપમાં ઊભી સાઇડમાં (Fully Responsive) */}
-      <div className={`fixed bottom-0 left-0 z-50 w-full h-[65px] md:w-[70px] md:h-full flex flex-row md:flex-col items-center justify-around md:justify-start md:py-6 md:space-y-8 border-t md:border-t-0 md:border-r ${
+      <div className={`w-full h-[65px] md:w-[65px] md:h-full flex flex-row md:flex-col items-center justify-around md:justify-start md:py-6 md:space-y-8 border-t md:border-t-0 md:border-r shrink-0 ${
         darkMode ? 'bg-gray-900 border-gray-800' : 'bg-[#f0f2f5] border-gray-200'
       }`}>
         <div onClick={() => setActiveTab("chats")} className={`cursor-pointer text-2xl transition-colors p-2 rounded-xl ${activeTab === "chats" ? "text-[#00a884]" : "text-gray-400 hover:text-[#00a884]"}`}>
@@ -78,7 +78,7 @@ const SideBar = ({ darkMode, setSelectedUser }) => {
       </div>
 
       {/* 🔵 ડાયનેમિક ચેટ/કોલ/સેટિંગ્સ લિસ્ટ */}
-      <div className='flex-1 p-5 overflow-y-auto h-[calc(100vh-65px)] md:h-full'>
+      <div className='flex-1 p-5 overflow-y-auto h-full'>
         
         {/* CHATS TAB */}
         {activeTab === "chats" && (

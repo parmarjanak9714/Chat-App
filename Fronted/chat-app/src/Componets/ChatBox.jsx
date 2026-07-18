@@ -39,7 +39,7 @@ const handleLogout = () => {
   // કોલિંગ બટન માટે ડમી એલર્ટ ફંક્શન્સ
   const handleActionClick = (actionName) => {
     if (!selectedUser) {
-      alert("મહેરબાની કરીને પહેલા કોઈ ચેટ પસંદ કરો!");
+      alert("please select chat!");
       return;
     }
     const name = selectedUser.name || selectedUser.username;
@@ -47,12 +47,12 @@ const handleLogout = () => {
   };
 
   return (
-    <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
-      darkMode ? 'bg-slate-950 text-white' : 'bg-gray-50 text-gray-900'
-    }`}>
+    <div className={`w-full h-full flex flex-col overflow-hidden ${
+  darkMode ? "bg-slate-950 text-white" : "bg-gray-50 text-gray-900"
+}`}>
         
         {/* 🟢 Header - હવે આમાં ડાબી બાજુ પ્રોફાઇલ અને જમણી બાજુ વૉટ્સએપ આઇકન્સ છે */}
-        <div className={`p-3 md:p-4 border-b flex items-center justify-between gap-2 min-w-0 ${
+        <div className={`h-[65px] p-3 md:p-4 border-b flex items-center justify-between gap-2 min-w-0 shrink-0 ${
           darkMode ? 'bg-gray-900 border-gray-800' : 'bg-gray-100 border-gray-200'
         }`}>
             {/* 🔴 ડાબી બાજુ: યુઝર પ્રોફાઇલ અને નામ */}
@@ -136,9 +136,10 @@ const handleLogout = () => {
         </div>
 
         {/* Messages Area */}
-        <div className={`flex-1 p-4 md:p-6 overflow-y-auto space-y-3 ${
-          darkMode ? 'bg-slate-900' : 'bg-gray-200'
-        }`}>
+        <div className={`flex-1 overflow-y-auto ${
+  darkMode ? 'bg-slate-900' : 'bg-gray-200'
+}`}>
+
             {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
                     <div className={`p-3 rounded-2xl max-w-[70%] shadow-md relative ${
@@ -152,8 +153,12 @@ const handleLogout = () => {
                 </div>
             ))}
         </div>
-
-        <MessageInput onSendMessage={handleSendMessage} darkMode={darkMode} />
+      <div className="w-full shrink-0">
+  <MessageInput
+    onSendMessage={handleSendMessage}
+    darkMode={darkMode}
+  />
+</div>
     </div>
   )
 }
